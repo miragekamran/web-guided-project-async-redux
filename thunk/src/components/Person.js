@@ -1,24 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { getPerson } from '../actions';
 
-const Person = ({ person, isFetching, error }) => {
+const Person = (props) => {
 
-  if (error) {
+  if (props.error) {
     return <h2>We got an error: {error}</h2>;
   }
 
-  if (isFetching) {
+  if (props.isFetching) {
     return <h2>Fetching person for ya!</h2>;
   }
 
   return (
-    <>
-      <div>
-        <h2>Say Hi to: {person.name.first} {person.name.last}</h2>
-        <img src={person.picture.large}/>
-      </div>
-      <button>Get new person</button>
-    </>
+      <>
+          <div>
+              <h2>
+                  Say Hi to: {props.person.name.first} {props.person.name.last}
+              </h2>
+              <img src={props.person.picture.large} />
+          </div>
+          <button onClick={() => props.getPerson()}>Get new person</button>
+      </>
   );
 };
 
@@ -30,4 +33,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Person);
+export default connect(mapStateToProps, {getPerson})(Person);
